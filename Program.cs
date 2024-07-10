@@ -79,7 +79,7 @@ while (choice != "5")
     switch (choice)
     {
         case "1":
-            // Console.WriteLine("Display all plants"); I would do this so it do not exit the program
+            //Console.WriteLine("Display all plants"); //I would do this so it do not exit the program
             throw new NotImplementedException("Display all plants");
         case "2":
             throw new NotImplementedException("Post a plant to be adopted");
@@ -95,6 +95,7 @@ while (choice != "5")
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("Please choose an option between 1 and 5!");
             }
             break;
