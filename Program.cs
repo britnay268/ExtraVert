@@ -53,9 +53,42 @@ List<Plant> plants = new List<Plant>()
 
 Console.WriteLine("Greetings Plant Friend!");
 
-Console.WriteLine("Here are all the plants:");
+//Console.WriteLine("Here are all the plants:");
 
-for (int i = 0; i < plants.Count; i++)
+//for (int i = 0; i < plants.Count; i++)
+//{
+//    Console.WriteLine($"{i + 1}. {plants[i].Species} ");
+//}
+
+void MainMenu()
 {
-    Console.WriteLine($"{i + 1}. {plants[i].Species} ");
+    Console.WriteLine(@"Choose an option from the Main Menu:
+    1. Display all plants
+    2. Post a plant to be adopted
+    3. Adopt a plant
+    4. Delist a plant
+    5.Exit");
+}
+
+string choice = null;
+
+while (choice != "5")
+{
+    MainMenu();
+    choice = Console.ReadLine();
+    switch (choice)
+    {
+        case "1":
+            // Console.WriteLine("Display all plants"); I would do this so it do not exit the program
+            throw new NotImplementedException("Display all plants");
+        case "2":
+            throw new NotImplementedException("Post a plant to be adopted");
+        case "3":
+            throw new NotImplementedException("Adopt a plant");
+        case "4":
+            throw new NotImplementedException("Delist a plant");
+        default:
+            Console.WriteLine("You have exited the app!");
+            break;
+    }
 }
