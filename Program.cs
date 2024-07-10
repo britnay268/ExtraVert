@@ -88,7 +88,15 @@ while (choice != "5")
         case "4":
             throw new NotImplementedException("Delist a plant");
         default:
-            Console.WriteLine("You have exited the app!");
+            if (choice.Equals("5"))
+            {
+                Console.WriteLine("You have exited the app!");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Please choose an option between 1 and 5!");
+            }
             break;
     }
 }
