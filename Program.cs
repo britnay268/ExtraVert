@@ -49,3 +49,13 @@ List<Plant> plants = new List<Plant>()
         Sold = true,
     },
 };
+
+
+Console.WriteLine("Greetings Plant Friend!");
+
+Console.WriteLine("Here are all the plants:");
+
+for (int i = 0; i < plants.Count; i++)
+{
+    Console.WriteLine($"{i + 1}. {plants[i].Species} ");
+}
