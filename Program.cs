@@ -89,7 +89,9 @@ while (choice != "5")
             PostAPlant();
             break;
         case "3":
-            throw new NotImplementedException("Adopt a plant");
+            //throw new NotImplementedException("Adopt a plant");
+            AdoptAPlant();
+            break;
         case "4":
             throw new NotImplementedException("Delist a plant");
         default:
@@ -168,4 +170,14 @@ void PostAPlant()
     plants.Add(newPlant);
 
     Console.WriteLine($"Your plant {newPlant.Species} in {newPlant.City}, {newPlant.ZIP} is available for {newPlant.AskingPrice} dollars");
+}
+
+void AdoptAPlant()
+{
+    Console.WriteLine("Here are the available plants:");
+    for (int i = 0; i < plants.Count; i++)
+    {
+        if (plants[i].Sold == false)
+         Console.WriteLine($"- {plants[i].Species}");
+    }
 }
