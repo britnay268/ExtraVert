@@ -93,7 +93,9 @@ while (choice != "5")
             AdoptAPlant();
             break;
         case "4":
-            throw new NotImplementedException("Delist a plant");
+            //throw new NotImplementedException("Delist a plant");
+            DelistAPlant();
+            break;
         default:
             if (choice.Equals("5"))
             {
@@ -204,4 +206,20 @@ void AdoptAPlant()
 
     Console.WriteLine($"You have adopted {availablePlants[plantIndex - 1].Species}");
 
+}
+
+void DelistAPlant()
+{
+    int i = 1;
+    foreach (Plant plant in plants)
+    {
+        Console.WriteLine($"{i++}. {plant.Species}");
+    }
+
+    Console.WriteLine("Choose a number to be remove a plant from the list:");
+    int input = int.Parse(Console.ReadLine());
+
+    plants.RemoveAt(input - 1);
+
+    Console.WriteLine("You have successfully removed plant from list!");
 }
