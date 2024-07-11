@@ -80,7 +80,9 @@ while (choice != "5")
     {
         case "1":
             //Console.WriteLine("Display all plants"); //I would do this so it do not exit the program
-            throw new NotImplementedException("Display all plants");
+            Console.Clear();
+            DisplayPlants();
+            break;
         case "2":
             throw new NotImplementedException("Post a plant to be adopted");
         case "3":
@@ -99,5 +101,18 @@ while (choice != "5")
                 Console.WriteLine("Please choose an option between 1 and 5!");
             }
             break;
+    }
+}
+
+void DisplayPlants()
+{
+    for (int i = 0; i < plants.Count; i++)
+    {
+        // <Number>. <Name of Plant> in <City> <is available/was sold> for <Price> dollars
+        //Examples:
+        //    1.A Ficus in Pasadena was sold for 15 dollars
+        //    2.A Hydrangea in Walla Walla is available for 25 dollars"
+
+        Console.WriteLine($"{i + 1}. A {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "is available" : "was sold")} {plants[i].AskingPrice} dollars");
     }
 }
