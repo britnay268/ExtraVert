@@ -174,10 +174,34 @@ void PostAPlant()
 
 void AdoptAPlant()
 {
-    Console.WriteLine("Here are the available plants:");
-    for (int i = 0; i < plants.Count; i++)
+    static List<Plant> AvailablePlants(List<Plant> plants)
     {
-        if (plants[i].Sold == false)
-         Console.WriteLine($"- {plants[i].Species}");
+        return plants.Where(p => p.Sold == false).ToList();
     }
+
+    // Did this because looping through just plants gave an uneven number for available plants
+    List <Plant> availablePlants = AvailablePlants(plants);
+
+    Console.WriteLine("Here are the available plants:");
+    for (int i = 0; i < availablePlants.Count; i++)
+    {
+        if (availablePlants[i].Sold == false)
+         Console.WriteLine($"{i + 1}. {availablePlants[i].Species}");
+    }
+
+    Console.WriteLine("Select the number to adopt a plant:");
+    int plantIndex;
+
+    
+    while(!int.TryParse(Console.ReadLine(), out plantIndex) || plantIndex > availablePlants.Count || plantIndex < 1)
+    {
+        Console.WriteLine("Try again! That was not a valid option");
+    }
+
+    //This finds the first plant species that is equal to the select option from the availablePlants species and set sold to true
+    // I had to minus one cause the index starts at 0
+    plants.FirstOrDefault(p => p.Species == availablePlants[plantIndex -1].Species).Sold = true;
+
+    Console.WriteLine($"You have adopted {availablePlants[plantIndex - 1].Species}");
+
 }
