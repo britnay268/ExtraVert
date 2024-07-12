@@ -50,6 +50,7 @@ List<Plant> plants = new List<Plant>()
     },
 };
 
+Random random = new Random();
 
 Console.WriteLine("Greetings Plant Friend!");
 
@@ -67,12 +68,13 @@ void MainMenu()
     2. Post a plant to be adopted
     3. Adopt a plant
     4. Delist a plant
-    5.Exit");
+    5. Plant of the Day
+    6. Exit");
 }
 
 string choice = null;
 
-while (choice != "5")
+while (choice != "6")
 {
     MainMenu();
     choice = Console.ReadLine();
@@ -96,8 +98,11 @@ while (choice != "5")
             //throw new NotImplementedException("Delist a plant");
             DelistAPlant();
             break;
+        case "5":
+            PlantOfTheDay();
+            break;
         default:
-            if (choice.Equals("5"))
+            if (choice.Equals("6"))
             {
                 Console.WriteLine("You have exited the app!");
                 break;
@@ -120,7 +125,7 @@ void DisplayPlants()
         //    1.A Ficus in Pasadena was sold for 15 dollars
         //    2.A Hydrangea in Walla Walla is available for 25 dollars"
 
-        Console.WriteLine($"{i + 1}. A {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for {plants[i].AskingPrice} dollars");
+        Console.WriteLine($"{i + 1}. A {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for {plants[i].AskingPrice}.");
     }
 }
 
@@ -222,4 +227,24 @@ void DelistAPlant()
     plants.RemoveAt(input - 1);
 
     Console.WriteLine("You have successfully removed plant from list!");
+}
+
+void PlantOfTheDay()
+{
+    // Geta a randome index from plants list based on the length of list
+    int randomPlantIndex = random.Next(1, plants.Count);
+
+    // While the random generated plant Sold property is true, it generates a new randome plant but when it is false, it goes to line 244 and console warn the details for the plant
+    while (plants[randomPlantIndex - 1].Sold)
+    {
+        randomPlantIndex = random.Next(1, plants.Count);
+        
+    }
+    
+    Console.WriteLine($@"Plant of The Day:
+            Species - {plants[randomPlantIndex - 1].Species}
+            Location - {plants[randomPlantIndex - 1].City}
+            Light Needs - {plants[randomPlantIndex - 1].LightNeeds}
+            Price - ${plants[randomPlantIndex - 1].AskingPrice}");
+    
 }
