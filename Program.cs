@@ -64,17 +64,18 @@ Console.WriteLine("Greetings Plant Friend!");
 void MainMenu()
 {
     Console.WriteLine(@"Choose an option from the Main Menu:
+    0. Exit
     1. Display all plants
     2. Post a plant to be adopted
     3. Adopt a plant
     4. Delist a plant
     5. Plant of the Day
-    6. Exit");
+    6. Search Plant by Light Needs");
 }
 
 string choice = null;
 
-while (choice != "6")
+while (choice != "0")
 {
     MainMenu();
     choice = Console.ReadLine();
@@ -101,8 +102,11 @@ while (choice != "6")
         case "5":
             PlantOfTheDay();
             break;
+        case "6":
+            Search();
+            break;
         default:
-            if (choice.Equals("6"))
+            if (choice.Equals("0"))
             {
                 Console.WriteLine("You have exited the app!");
                 break;
@@ -247,4 +251,37 @@ void PlantOfTheDay()
             Light Needs - {plants[randomPlantIndex - 1].LightNeeds}
             Price - ${plants[randomPlantIndex - 1].AskingPrice}");
     
+}
+
+void Search()
+{
+    Console.WriteLine("Enter a maximum light needs number (between 1 and 5)");
+
+    string input = Console.ReadLine();
+
+    int index = 1;
+
+    List<Plant> searchedPlants = new List<Plant>();
+
+    for (int i = 0; i < plants.Count; i++)
+    {
+        if (plants[i].LightNeeds == int.Parse(input))
+        {
+            searchedPlants.Add(plants[i]);
+        }
+
+    }
+
+    if (searchedPlants.Count > 0)
+    {
+        Console.WriteLine("Here are the plants with the entered light need:");
+        foreach (Plant plant in searchedPlants)
+        {
+            Console.WriteLine($"{index++}. {plant.Species}");
+        }
+    }
+    else
+    {
+        Console.WriteLine("There are no plants with the entered light need!");
+    }
 }
