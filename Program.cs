@@ -21,7 +21,7 @@ List<Plant> plants = new List<Plant>()
         City = "Chicago",
         ZIP = "60601",
         Sold = true,
-        AvailableUntil = new DateTime(2024, 12, 21),
+        AvailableUntil = new DateTime(2024, 6, 21),
     },
     new Plant()
     {
@@ -105,7 +105,8 @@ void MainMenu()
     3. Adopt a plant
     4. Delist a plant
     5. Plant of the Day
-    6. Search Plant by Light Needs");
+    6. Search Plant by Light Needs
+    7. View Plant Statistics");
 }
 
 string choice = null;
@@ -139,6 +140,9 @@ while (choice != "0")
             break;
         case "6":
             Search();
+            break;
+        case "7":
+            Statistics();
             break;
         default:
             if (choice.Equals("0"))
@@ -258,7 +262,7 @@ void AdoptAPlant()
 
     //This finds the first plant species that is equal to the select option from the availablePlants species and set sold to true
     // I had to minus one cause the index starts at 0
-    plants.FirstOrDefault(p => p.Species == availablePlants[plantIndex -1].Species).Sold = true;
+    plants.FirstOrDefault(p => p.Species == availablePlants[plantIndex - 1].Species).Sold = true;
 
     Console.WriteLine($"You have adopted {availablePlants[plantIndex - 1].Species}");
 
@@ -331,4 +335,23 @@ void Search()
     {
         Console.WriteLine("There are no plants with the entered light need!");
     }
+}
+
+void Statistics()
+{
+    Plant cheapestPlant = plants.OrderBy(p => p.AskingPrice).FirstOrDefault();
+    Console.WriteLine($"Lowest price plant name: {cheapestPlant.Species}");
+
+    int availablePlantsCount = plants.Where(p => p.Sold == false && p.AvailableUntil > DateTime.Now).Count();
+    Console.WriteLine($"Number of Plants Available: {availablePlantsCount}");
+
+    Plant hightestLightNeeds = plants.OrderByDescending(p => p.LightNeeds).FirstOrDefault();
+    Console.WriteLine($"Name of plant with highest light needs: {hightestLightNeeds.Species}");
+
+    double sumLightNeeds = plants.Select(p => p.LightNeeds).Sum();
+    double totalPlants = plants.Count();
+    Console.WriteLine($"Average light needs: {sumLightNeeds/(double)totalPlants}");
+
+    double adoptedPlants = plants.Where(p => p.Sold).Count();
+    Console.WriteLine($"Percentage of plants adoped: {(adoptedPlants / totalPlants) * 100}%");
 }
