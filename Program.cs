@@ -174,46 +174,66 @@ void DisplayPlants()
 
 void PostAPlant()
 {
-    Console.WriteLine("What is the species of the plant?");
-    string? speciesEntered = Console.ReadLine();
+    bool validDate = false;
+    Plant newPlant = null;
 
-    Console.WriteLine("From a scale from 1-5 with 1 being the least and 5 being the most, how much light does the plant need?");
-    int lightNeededEntered = int.Parse(Console.ReadLine());
-
-    Console.WriteLine("What is the price of the plant?");
-    decimal priceEntered = Math.Round(decimal.Parse(Console.ReadLine()), 2);
-
-    Console.WriteLine("What city is the plant located?");
-    string? cityEntered = Console.ReadLine();
-
-    Console.WriteLine("What zip code is the plant located in?");
-
-    //If the length is greater than 5, it extracts the first 5 characters using Console.ReadLine().Substring(0, 5)
-    string? zipcodeEntered = Console.ReadLine();
-    if (zipcodeEntered.Length > 5)
+    while (!validDate)
     {
-        zipcodeEntered = zipcodeEntered.Substring(0, 5);
+        try
+        {
+            Console.WriteLine("What is the species of the plant?");
+            string? speciesEntered = Console.ReadLine();
+
+            Console.WriteLine("From a scale from 1-5 with 1 being the least and 5 being the most, how much light does the plant need?");
+            int lightNeededEntered = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("What is the price of the plant?");
+            decimal priceEntered = Math.Round(decimal.Parse(Console.ReadLine()), 2);
+
+            Console.WriteLine("What city is the plant located?");
+            string? cityEntered = Console.ReadLine();
+
+            Console.WriteLine("What zip code is the plant located in?");
+
+            //If the length is greater than 5, it extracts the first 5 characters using Console.ReadLine().Substring(0, 5)
+            string? zipcodeEntered = Console.ReadLine();
+            if (zipcodeEntered.Length > 5)
+            {
+                zipcodeEntered = zipcodeEntered.Substring(0, 5);
+            }
+
+            Console.WriteLine("Please enter the year the plant will be available until:");
+            int year = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Please enter the month (1-12) the plant will be available until:");
+            int month = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Please enter the day (1-31) the plant will be available until:");
+            int day = int.Parse(Console.ReadLine());
+
+            newPlant = new Plant()
+            {
+                Species = speciesEntered,
+                LightNeeds = lightNeededEntered,
+                AskingPrice = priceEntered,
+                City = cityEntered,
+                ZIP = zipcodeEntered,
+                Sold = false,
+            };
+
+            newPlant.AvailableUntil = new DateTime(year, month, day);
+
+            plants.Add(newPlant);
+
+            Console.WriteLine($"Your plant {newPlant.Species} in {newPlant.City}, {newPlant.ZIP} is available for {newPlant.AskingPrice} dollars and is available until {newPlant.AvailableUntil}");
+            validDate = true;
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine("The date you entered is invalid. Please try again!");
+            Console.WriteLine($"Error: {ex.Message}");
+        } 
     }
-
-    Console.WriteLine("Please enter the year the plant will be available until:");
-    int year = int.Parse(Console.ReadLine());
-
-    Console.WriteLine("Please enter the month the plant will be available until:");
-    int month = int.Parse(Console.ReadLine());
-
-    Console.WriteLine("Please enter the day the plant will be available until:");
-    int day = int.Parse(Console.ReadLine());
-
-    Plant newPlant = new Plant()
-    {
-        Species = speciesEntered,
-        LightNeeds = lightNeededEntered,
-        AskingPrice = priceEntered,
-        City = cityEntered,
-        ZIP = zipcodeEntered,
-        Sold = false,
-        AvailableUntil = new DateTime(year, month, day),
-    };
 
     //plants.Add(new Plant
     //{
@@ -224,10 +244,6 @@ void PostAPlant()
     //    ZIP = zipcodeEntered,
     //    Sold = false,
     //});
-
-    plants.Add(newPlant);
-
-    Console.WriteLine($"Your plant {newPlant.Species} in {newPlant.City}, {newPlant.ZIP} is available for {newPlant.AskingPrice} dollars and is available until {newPlant.AvailableUntil}");
 }
 
 void AdoptAPlant()
@@ -353,5 +369,5 @@ void Statistics()
     Console.WriteLine($"Average light needs: {sumLightNeeds/(double)totalPlants}");
 
     double adoptedPlants = plants.Where(p => p.Sold).Count();
-    Console.WriteLine($"Percentage of plants adoped: {(adoptedPlants / totalPlants) * 100}%");
+    Console.WriteLine($"Percentage of plants adopted: {(adoptedPlants / totalPlants) * 100}%");
 }
