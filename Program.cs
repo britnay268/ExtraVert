@@ -168,7 +168,7 @@ void DisplayPlants()
         //    1.A Ficus in Pasadena was sold for 15 dollars
         //    2.A Hydrangea in Walla Walla is available for 25 dollars"
 
-        Console.WriteLine($"{i + 1}. A {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for {plants[i].AskingPrice} and is available until {plants[i].AvailableUntil}.");
+        Console.WriteLine($"{i + 1}. A {PlantDetails(plants[i])} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for {plants[i].AskingPrice} and is available until {plants[i].AvailableUntil}.");
     }
 }
 
@@ -225,7 +225,7 @@ void PostAPlant()
 
             plants.Add(newPlant);
 
-            Console.WriteLine($"Your plant {newPlant.Species} in {newPlant.City}, {newPlant.ZIP} is available for {newPlant.AskingPrice} dollars and is available until {newPlant.AvailableUntil}");
+            Console.WriteLine($"Your plant {PlantDetails(newPlant)} in {newPlant.City}, {newPlant.ZIP} is available for {newPlant.AskingPrice} dollars and is available until {newPlant.AvailableUntil}");
             validDate = true;
         }
         catch (ArgumentOutOfRangeException ex)
@@ -262,7 +262,7 @@ void AdoptAPlant()
     {
         if (availablePlants[i].Sold == false && availablePlants[i].AvailableUntil > DateTime.Now)
         {
-             Console.WriteLine($"{plantNumber}. {availablePlants[i].Species} and is available until {availablePlants[i].AvailableUntil}");
+             Console.WriteLine($"{plantNumber}. {PlantDetails(availablePlants[i])} and is available until {availablePlants[i].AvailableUntil}");
              plantNumber++;
         }
     }
@@ -278,9 +278,9 @@ void AdoptAPlant()
 
     //This finds the first plant species that is equal to the select option from the availablePlants species and set sold to true
     // I had to minus one cause the index starts at 0
-    plants.FirstOrDefault(p => p.Species == availablePlants[plantIndex - 1].Species).Sold = true;
+    plants.FirstOrDefault(p => p.Species == PlantDetails(availablePlants[plantIndex - 1])).Sold = true;
 
-    Console.WriteLine($"You have adopted {availablePlants[plantIndex - 1].Species}");
+    Console.WriteLine($"You have adopted {PlantDetails(availablePlants[plantIndex - 1])}");
 
 }
 
@@ -289,7 +289,7 @@ void DelistAPlant()
     int i = 1;
     foreach (Plant plant in plants)
     {
-        Console.WriteLine($"{i++}. {plant.Species}");
+        Console.WriteLine($"{i++}. {PlantDetails(plant)}");
     }
 
     Console.WriteLine("Choose a number to be remove a plant from the list:");
@@ -313,7 +313,7 @@ void PlantOfTheDay()
     }
     
     Console.WriteLine($@"Plant of The Day:
-            Species - {plants[randomPlantIndex - 1].Species}
+            Species - {PlantDetails(plants[randomPlantIndex - 1])}
             Location - {plants[randomPlantIndex - 1].City}
             Light Needs - {plants[randomPlantIndex - 1].LightNeeds}
             Price - ${plants[randomPlantIndex - 1].AskingPrice}");
@@ -344,7 +344,7 @@ void Search()
         Console.WriteLine("Here are the plants with the entered light need:");
         foreach (Plant plant in searchedPlants)
         {
-            Console.WriteLine($"{index++}. {plant.Species}");
+            Console.WriteLine($"{index++}. {PlantDetails(plant)}");
         }
     }
     else
@@ -370,4 +370,11 @@ void Statistics()
 
     double adoptedPlants = plants.Where(p => p.Sold).Count();
     Console.WriteLine($"Percentage of plants adopted: {(adoptedPlants / totalPlants) * 100}%");
+}
+
+string PlantDetails(Plant plant)
+{
+    string plantString = plant.Species;
+
+    return plantString;
 }
