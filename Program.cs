@@ -11,6 +11,7 @@ List<Plant> plants = new List<Plant>()
         City = "Seattle",
         ZIP = "98109",
         Sold = false,
+        AvailableUntil = new DateTime(2024, 11, 11),
     },
     new Plant()
     {
@@ -20,6 +21,7 @@ List<Plant> plants = new List<Plant>()
         City = "Chicago",
         ZIP = "60601",
         Sold = true,
+        AvailableUntil = new DateTime(2024, 12, 21),
     },
     new Plant()
     {
@@ -29,6 +31,7 @@ List<Plant> plants = new List<Plant>()
         City = "Los Angeles",
         ZIP = "90001",
         Sold = false,
+        AvailableUntil = new DateTime(2024, 9, 3),
     },
     new Plant()
     {
@@ -38,6 +41,7 @@ List<Plant> plants = new List<Plant>()
         City = "Miami",
         ZIP = "33133",
         Sold = true,
+        AvailableUntil = new DateTime(2024, 6, 11),
     },
     new Plant()
     {
@@ -47,6 +51,37 @@ List<Plant> plants = new List<Plant>()
         City = "New York",
         ZIP = "10001",
         Sold = true,
+        AvailableUntil = new DateTime(2024, 5, 9),
+    },
+    new Plant()
+    {
+        Species = "Zea mays (Corn)",
+        LightNeeds = 4,
+        AskingPrice = 1.99M,
+        City = "Ohio",
+        ZIP = "67231",
+        Sold = false,
+        AvailableUntil = new DateTime(2024, 4, 12),
+    },
+    new Plant()
+    {
+        Species = "Coffea (Coffee)",
+        LightNeeds = 2,
+        AskingPrice = 9.99M,
+        City = "Oregon",
+        ZIP = "38901",
+        Sold = false,
+        AvailableUntil = new DateTime(2024, 9, 22),
+    },
+    new Plant()
+    {
+        Species = "Oryza sativa (Rice)",
+        LightNeeds = 1,
+        AskingPrice = 4.99M,
+        City = "Minnesota",
+        ZIP = "59762",
+        Sold = false,
+        AvailableUntil = new DateTime(2024, 6, 17),
     },
 };
 
@@ -129,7 +164,7 @@ void DisplayPlants()
         //    1.A Ficus in Pasadena was sold for 15 dollars
         //    2.A Hydrangea in Walla Walla is available for 25 dollars"
 
-        Console.WriteLine($"{i + 1}. A {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for {plants[i].AskingPrice}.");
+        Console.WriteLine($"{i + 1}. A {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for {plants[i].AskingPrice} and is available until {plants[i].AvailableUntil}.");
     }
 }
 
@@ -156,7 +191,14 @@ void PostAPlant()
         zipcodeEntered = zipcodeEntered.Substring(0, 5);
     }
 
+    Console.WriteLine("Please enter the year the plant will be available until:");
+    int year = int.Parse(Console.ReadLine());
 
+    Console.WriteLine("Please enter the month the plant will be available until:");
+    int month = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Please enter the day the plant will be available until:");
+    int day = int.Parse(Console.ReadLine());
 
     Plant newPlant = new Plant()
     {
@@ -166,6 +208,7 @@ void PostAPlant()
         City = cityEntered,
         ZIP = zipcodeEntered,
         Sold = false,
+        AvailableUntil = new DateTime(year, month, day),
     };
 
     //plants.Add(new Plant
@@ -180,7 +223,7 @@ void PostAPlant()
 
     plants.Add(newPlant);
 
-    Console.WriteLine($"Your plant {newPlant.Species} in {newPlant.City}, {newPlant.ZIP} is available for {newPlant.AskingPrice} dollars");
+    Console.WriteLine($"Your plant {newPlant.Species} in {newPlant.City}, {newPlant.ZIP} is available for {newPlant.AskingPrice} dollars and is available until {newPlant.AvailableUntil}");
 }
 
 void AdoptAPlant()
@@ -193,11 +236,15 @@ void AdoptAPlant()
     // Did this because looping through just plants gave an uneven number for available plants
     List <Plant> availablePlants = AvailablePlants(plants);
 
+    int plantNumber = 1;
     Console.WriteLine("Here are the available plants:");
     for (int i = 0; i < availablePlants.Count; i++)
     {
-        if (availablePlants[i].Sold == false)
-         Console.WriteLine($"{i + 1}. {availablePlants[i].Species}");
+        if (availablePlants[i].Sold == false && availablePlants[i].AvailableUntil > DateTime.Now)
+        {
+             Console.WriteLine($"{plantNumber}. {availablePlants[i].Species} and is available until {availablePlants[i].AvailableUntil}");
+             plantNumber++;
+        }
     }
 
     Console.WriteLine("Select the number to adopt a plant:");
