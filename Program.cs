@@ -81,7 +81,7 @@ List<Plant> plants = new List<Plant>()
         City = "Minnesota",
         ZIP = "59762",
         Sold = false,
-        AvailableUntil = new DateTime(2024, 10, 6),
+        AvailableUntil = new DateTime(2024, 6, 17),
     },
 };
 
@@ -164,7 +164,7 @@ void DisplayPlants()
         //    1.A Ficus in Pasadena was sold for 15 dollars
         //    2.A Hydrangea in Walla Walla is available for 25 dollars"
 
-        Console.WriteLine($"{i + 1}. A {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for {plants[i].AskingPrice} and is available until {newPlant.AvailableUntil}.");
+        Console.WriteLine($"{i + 1}. A {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for {plants[i].AskingPrice} and is available until {plants[i].AvailableUntil}.");
     }
 }
 
@@ -236,11 +236,15 @@ void AdoptAPlant()
     // Did this because looping through just plants gave an uneven number for available plants
     List <Plant> availablePlants = AvailablePlants(plants);
 
+    int plantNumber = 1;
     Console.WriteLine("Here are the available plants:");
     for (int i = 0; i < availablePlants.Count; i++)
     {
-        if (availablePlants[i].Sold == false)
-         Console.WriteLine($"{i + 1}. {availablePlants[i].Species}");
+        if (availablePlants[i].Sold == false && availablePlants[i].AvailableUntil > DateTime.Now)
+        {
+             Console.WriteLine($"{plantNumber}. {availablePlants[i].Species} and is available until {availablePlants[i].AvailableUntil}");
+             plantNumber++;
+        }
     }
 
     Console.WriteLine("Select the number to adopt a plant:");
