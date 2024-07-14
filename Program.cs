@@ -250,7 +250,7 @@ void AdoptAPlant()
 {
     static List<Plant> AvailablePlants(List<Plant> plants)
     {
-        return plants.Where(p => p.Sold == false).ToList();
+        return plants.Where(p => p.Sold == false && p.AvailableUntil > DateTime.Now).ToList();
     }
 
     // Did this because looping through just plants gave an uneven number for available plants
@@ -270,8 +270,8 @@ void AdoptAPlant()
     Console.WriteLine("Select the number to adopt a plant:");
     int plantIndex;
 
-    
-    while(!int.TryParse(Console.ReadLine(), out plantIndex) || plantIndex > availablePlants.Count || plantIndex < 1)
+    // This keeps executeing if the input conversion to an int is unsuccessful or plantIndex > 0 or plantIndex is more than the length of available Plants
+    while (!int.TryParse(Console.ReadLine(), out plantIndex) || plantIndex > availablePlants.Count || plantIndex < 1)
     {
         Console.WriteLine("Try again! That was not a valid option");
     }
